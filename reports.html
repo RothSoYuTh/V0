@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports - ScamShield</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',
+            secondary: '#0ea5e9',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+          <i class="fas fa-shield-halved text-white text-lg"></i>
+        </div>
+        <div>
+          <span class="font-bold text-gray-800">ScamShield</span>
+          <p class="text-xs text-gray-500">Protect your purchase</p>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="index.html" class="text-gray-600 hover:text-blue-600">Home</a>
+        <a href="report-scam.html" class="text-gray-600 hover:text-blue-600">Report Scam</a>
+        <a href="reports.html" class="text-blue-600 font-medium">Reports</a>
+        <a href="check-seller.html" class="text-gray-600 hover:text-blue-600">Check Seller</a>
+        <a href="analyze-chat.html" class="text-gray-600 hover:text-blue-600">Analyze Chat</a>
+        <a href="learn.html" class="text-gray-600 hover:text-blue-600">Learn</a>
+      </nav>
+      <button class="md:hidden text-gray-600" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t px-4 py-3">
+      <nav class="flex flex-col gap-3 text-sm">
+        <a href="index.html" class="text-gray-600">Home</a>
+        <a href="report-scam.html" class="text-gray-600">Report Scam</a>
+        <a href="reports.html" class="text-blue-600 font-medium">Reports</a>
+        <a href="check-seller.html" class="text-gray-600">Check Seller</a>
+        <a href="analyze-chat.html" class="text-gray-600">Analyze Chat</a>
+        <a href="learn.html" class="text-gray-600">Learn</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <!-- Page Header -->
+    <div class="bg-blue-50 rounded-xl p-6 mb-8">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+          <i class="fas fa-database text-blue-600 text-xl"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold text-gray-800">Scam Reports Database</h1>
+          <p class="text-gray-500 text-sm"><span id="reportCount">0</span> total reports submitted</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="mb-6">
+      <p class="text-gray-700 text-sm mb-4">Search here to find the suspicious sellers</p>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="relative">
+          <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+          <input type="text" id="searchInput1" placeholder="Search names, phone numbers, or descriptions..."
+            class="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm">
+        </div>
+        <div class="relative">
+          <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+          <input type="text" id="searchInput2" placeholder="Search names, phone numbers, or descriptions..."
+            class="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm">
+        </div>
+      </div>
+    </div>
+
+    <!-- Reports List -->
+    <div id="reportsList" class="space-y-4">
+      <!-- Reports will be loaded here -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="bg-white rounded-xl p-12 text-center">
+      <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <i class="fas fa-exclamation text-yellow-500 text-2xl"></i>
+      </div>
+      <h3 class="font-semibold text-gray-800 mb-2">No reports found</h3>
+      <p class="text-gray-500 text-sm">Be the first to submit a scam report and help protect the community.</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t mt-auto">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-center">
+      <p class="text-gray-600 text-sm mb-2">© 2025 ScamShield - Online Selling Scam Report Platform</p>
+      <p class="text-gray-500 text-xs mb-2">Developed by Sorayuth Roth & Srongchhay Ly | Cambodia Academy of Digital Technology (CADT)</p>
+      <p class="text-gray-400 text-xs">Data stored locally in your browser. No personal information is sent to external servers.</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('hidden');
+    }
+
+    // Load and display reports
+    function loadReports() {
+      const reports = JSON.parse(localStorage.getItem('scamReports') || '[]');
+      const reportsList = document.getElementById('reportsList');
+      const emptyState = document.getElementById('emptyState');
+      const reportCount = document.getElementById('reportCount');
+
+      reportCount.textContent = reports.length;
+
+      if (reports.length === 0) {
+        emptyState.classList.remove('hidden');
+        reportsList.classList.add('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+        reportsList.classList.remove('hidden');
+        
+        reportsList.innerHTML = reports.map(report => `
+          <div class="bg-white rounded-xl p-6 shadow-sm">
+            <div class="flex items-start justify-between mb-4">
+              <div>
+                <h3 class="font-semibold text-gray-800">${report.sellerName}</h3>
+                <p class="text-gray-500 text-sm">${report.phoneNumber}</p>
+              </div>
+              <span class="bg-red-100 text-red-600 text-xs px-3 py-1 rounded-full">Reported</span>
+            </div>
+            <p class="text-gray-600 text-sm mb-3">${report.description}</p>
+            <div class="flex items-center gap-4 text-xs text-gray-400">
+              <span><i class="fas fa-globe mr-1"></i>${report.platform}</span>
+              <span><i class="fas fa-calendar mr-1"></i>${new Date(report.date).toLocaleDateString()}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Search functionality
+    function searchReports(query) {
+      const reports = JSON.parse(localStorage.getItem('scamReports') || '[]');
+      return reports.filter(report => 
+        report.sellerName.toLowerCase().includes(query.toLowerCase()) ||
+        report.phoneNumber.includes(query) ||
+        report.description.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+
+    document.getElementById('searchInput1').addEventListener('input', (e) => {
+      const query = e.target.value;
+      if (query) {
+        const filtered = searchReports(query);
+        displayFilteredReports(filtered);
+      } else {
+        loadReports();
+      }
+    });
+
+    document.getElementById('searchInput2').addEventListener('input', (e) => {
+      const query = e.target.value;
+      if (query) {
+        const filtered = searchReports(query);
+        displayFilteredReports(filtered);
+      } else {
+        loadReports();
+      }
+    });
+
+    function displayFilteredReports(reports) {
+      const reportsList = document.getElementById('reportsList');
+      const emptyState = document.getElementById('emptyState');
+
+      if (reports.length === 0) {
+        emptyState.classList.remove('hidden');
+        reportsList.classList.add('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+        reportsList.classList.remove('hidden');
+        
+        reportsList.innerHTML = reports.map(report => `
+          <div class="bg-white rounded-xl p-6 shadow-sm">
+            <div class="flex items-start justify-between mb-4">
+              <div>
+                <h3 class="font-semibold text-gray-800">${report.sellerName}</h3>
+                <p class="text-gray-500 text-sm">${report.phoneNumber}</p>
+              </div>
+              <span class="bg-red-100 text-red-600 text-xs px-3 py-1 rounded-full">Reported</span>
+            </div>
+            <p class="text-gray-600 text-sm mb-3">${report.description}</p>
+            <div class="flex items-center gap-4 text-xs text-gray-400">
+              <span><i class="fas fa-globe mr-1"></i>${report.platform}</span>
+              <span><i class="fas fa-calendar mr-1"></i>${new Date(report.date).toLocaleDateString()}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Load reports on page load
+    loadReports();
+  </script>
+</body>
+</html>

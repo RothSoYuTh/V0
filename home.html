@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScamShield - Protect Your Purchase</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',
+            secondary: '#0ea5e9',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+          <i class="fas fa-shield-halved text-white text-lg"></i>
+        </div>
+        <div>
+          <span class="font-bold text-gray-800">ScamShield</span>
+          <p class="text-xs text-gray-500">Protect your purchase</p>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="index.html" class="text-blue-600 font-medium">Home</a>
+        <a href="report-scam.html" class="text-gray-600 hover:text-blue-600">Report Scam</a>
+        <a href="reports.html" class="text-gray-600 hover:text-blue-600">Reports</a>
+        <a href="check-seller.html" class="text-gray-600 hover:text-blue-600">Check Seller</a>
+        <a href="analyze-chat.html" class="text-gray-600 hover:text-blue-600">Analyze Chat</a>
+        <a href="learn.html" class="text-gray-600 hover:text-blue-600">Learn</a>
+      </nav>
+      <button class="md:hidden text-gray-600" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t px-4 py-3">
+      <nav class="flex flex-col gap-3 text-sm">
+        <a href="index.html" class="text-blue-600 font-medium">Home</a>
+        <a href="report-scam.html" class="text-gray-600">Report Scam</a>
+        <a href="reports.html" class="text-gray-600">Reports</a>
+        <a href="check-seller.html" class="text-gray-600">Check Seller</a>
+        <a href="analyze-chat.html" class="text-gray-600">Analyze Chat</a>
+        <a href="learn.html" class="text-gray-600">Learn</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="grid md:grid-cols-2 gap-8 items-center mb-12">
+      <div class="bg-blue-400 rounded-2xl p-8 text-white">
+        <p class="text-blue-200 text-sm mb-2">🇰🇭 Protecting Cambodian Online Shoppers</p>
+        <h1 class="text-3xl font-bold mb-4">Stop Online Selling Scams</h1>
+        <p class="text-blue-100 text-sm mb-6">Report scammers, check seller credibility, and protect yourself from online fraud. A community-driven platform to make online shopping safer in Cambodia.</p>
+        <div class="flex gap-3">
+          <a href="report-scam.html" class="bg-white text-blue-600 px-5 py-2.5 rounded-lg font-medium text-sm hover:bg-blue-50 transition">Report Scam</a>
+          <a href="check-seller.html" class="bg-transparent border-2 border-white text-white px-5 py-2.5 rounded-lg font-medium text-sm hover:bg-white/10 transition">Check a seller</a>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl p-8 shadow-sm flex flex-col items-center justify-center">
+        <div class="w-24 h-28 relative mb-4">
+          <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-t-full rounded-b-lg" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+            <div class="absolute inset-2 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-t-full rounded-b-lg flex items-center justify-center" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+              <i class="fas fa-check text-white text-3xl"></i>
+            </div>
+          </div>
+        </div>
+        <p class="text-4xl font-bold text-gray-800">24/7</p>
+        <p class="text-gray-500 text-sm">Protection Available</p>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+      <div class="bg-blue-50 rounded-xl p-5">
+        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-3 ">
+          <i class="fas fa-flag text-blue-600"></i>
+        </div>
+        <p class="text-2xl font-bold text-gray-800">1,247</p>
+        <p class="text-gray-500 text-sm">Scams Reported</p>
+      </div>
+      <div class="bg-cyan-50 rounded-xl p-5">
+        <div class="w-10 h-10 bg-cyan-100 rounded-lg flex items-center justify-center mb-3">
+          <i class="fas fa-search text-cyan-600"></i>
+        </div>
+        <p class="text-2xl font-bold text-gray-800">3,891</p>
+        <p class="text-gray-500 text-sm">Checks Performed</p>
+      </div>
+      <div class="bg-green-50 rounded-xl p-5">
+        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mb-3">
+          <i class="fas fa-chart-line text-green-600"></i>
+        </div>
+        <p class="text-2xl font-bold text-gray-800">68%</p>
+        <p class="text-gray-500 text-sm">Scam Reduction</p>
+      </div>
+      <div class="bg-purple-50 rounded-xl p-5">
+        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-3">
+          <i class="fas fa-users text-purple-600"></i>
+        </div>
+        <p class="text-2xl font-bold text-gray-800">5,432</p>
+        <p class="text-gray-500 text-sm">Users Protected</p>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="grid md:grid-cols-3 gap-6 mb-12">
+      <a href="report-scam.html" class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition group">
+        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-200 transition">
+          <i class="fas fa-file-alt text-blue-600 text-xl"></i>
+        </div>
+        <h3 class="font-semibold text-gray-800 mb-2">Report a Scam</h3>
+        <p class="text-gray-500 text-sm">Share your experience to help others avoid the same scammer</p>
+      </a>
+      <a href="check-seller.html" class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition group">
+        <div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-cyan-200 transition">
+          <i class="fas fa-user-check text-cyan-600 text-xl"></i>
+        </div>
+        <h3 class="font-semibold text-gray-800 mb-2">Check Seller</h3>
+        <p class="text-gray-500 text-sm">Search by phone number or profile link before you buy</p>
+      </a>
+      <a href="analyze-chat.html" class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition group">
+        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-purple-200 transition">
+          <i class="fas fa-comment-dots text-purple-600 text-xl"></i>
+        </div>
+        <h3 class="font-semibold text-gray-800 mb-2">Analyze Messages</h3>
+        <p class="text-gray-500 text-sm">Paste suspicious chat messages to detect scam patterns</p>
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t mt-auto">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-center">
+      <p class="text-gray-600 text-sm mb-2">© 2025 ScamShield - Online Selling Scam Report Platform</p>
+      <p class="text-gray-500 text-xs mb-2">Developed by Sorayuth Roth & Srongchhay Ly | Cambodia Academy of Digital Technology (CADT)</p>
+      <p class="text-gray-400 text-xs">Data stored locally in your browser. No personal information is sent to external servers.</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>

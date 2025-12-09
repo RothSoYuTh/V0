@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analyze Chat - ScamShield</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',
+            secondary: '#0ea5e9',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+          <i class="fas fa-shield-halved text-white text-lg"></i>
+        </div>
+        <div>
+          <span class="font-bold text-gray-800">ScamShield</span>
+          <p class="text-xs text-gray-500">Protect your purchase</p>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="index.html" class="text-gray-600 hover:text-blue-600">Home</a>
+        <a href="report-scam.html" class="text-gray-600 hover:text-blue-600">Report Scam</a>
+        <a href="reports.html" class="text-gray-600 hover:text-blue-600">Reports</a>
+        <a href="check-seller.html" class="text-gray-600 hover:text-blue-600">Check Seller</a>
+        <a href="analyze-chat.html" class="text-blue-600 font-medium">Analyze Chat</a>
+        <a href="learn.html" class="text-gray-600 hover:text-blue-600">Learn</a>
+      </nav>
+      <button class="md:hidden text-gray-600" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t px-4 py-3">
+      <nav class="flex flex-col gap-3 text-sm">
+        <a href="index.html" class="text-gray-600">Home</a>
+        <a href="report-scam.html" class="text-gray-600">Report Scam</a>
+        <a href="reports.html" class="text-gray-600">Reports</a>
+        <a href="check-seller.html" class="text-gray-600">Check Seller</a>
+        <a href="analyze-chat.html" class="text-blue-600 font-medium">Analyze Chat</a>
+        <a href="learn.html" class="text-gray-600">Learn</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-2xl mx-auto px-4 py-8">
+    <!-- Page Header -->
+    <div class="flex items-center gap-4 mb-8">
+      <div class="w-14 h-14 bg-gradient-to-br from-purple-400 to-pink-400 rounded-xl flex items-center justify-center">
+        <i class="fas fa-comment-dots text-white text-2xl"></i>
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold text-gray-800">Chat Message Analyzer</h1>
+        <p class="text-gray-500 text-sm">Detect suspicious patterns in seller conversations</p>
+      </div>
+    </div>
+
+    <!-- Input Section -->
+    <div class="mb-6">
+      <p class="text-gray-700 text-sm mb-3">Paste the conversation or message from the seller</p>
+      <textarea id="messageInput" rows="5" placeholder="Hi! This iPhone is cheap price only $200! Limited stock, last one! Send deposit $100 now to reserve. Trust me, guaranteed authentic!"
+        class="w-full px-4 py-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none text-sm resize-none mb-4"></textarea>
+      
+      <button onclick="analyzeMessage()" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-4 rounded-lg font-medium hover:from-purple-600 hover:to-pink-600 transition">
+        Analyze the message
+      </button>
+    </div>
+
+    <!-- Results -->
+    <div id="results" class="mb-6 hidden">
+      <!-- Results will appear here -->
+    </div>
+
+    <!-- How it works -->
+    <div class="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6">
+      <p class="text-purple-700 text-sm">
+        <i class="fas fa-magic mr-2"></i>
+        <strong>How it works:</strong> Our rule-based analyzer scans for common scam keywords and patterns such as urgency tactics, suspicious payment requests, and pressure to act quickly.
+      </p>
+    </div>
+
+    <!-- Examples -->
+    <div class="bg-white rounded-xl p-6 shadow-sm">
+      <h3 class="font-medium text-gray-800 mb-4">
+        <i class="fas fa-flask text-purple-500 mr-2"></i>
+        Example Suspicious Messages:
+      </h3>
+      <div class="space-y-3">
+        <button onclick="setExample(1)" class="w-full text-left text-sm text-gray-600 hover:text-purple-600 hover:bg-purple-50 p-2 rounded transition">
+          Click to test: "Hi! This iPhone is cheap price only $200! Limited stock..."
+        </button>
+        <button onclick="setExample(2)" class="w-full text-left text-sm text-gray-600 hover:text-purple-600 hover:bg-purple-50 p-2 rounded transition">
+          Click to test: "Special discount today only! Pay first via bank transfer..."
+        </button>
+        <button onclick="setExample(3)" class="w-full text-left text-sm text-gray-600 hover:text-purple-600 hover:bg-purple-50 p-2 rounded transition">
+          Click to test: "Hello, the laptop is available. You can check it first..."
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t mt-auto">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-center">
+      <p class="text-gray-600 text-sm mb-2">© 2025 ScamShield - Online Selling Scam Report Platform</p>
+      <p class="text-gray-500 text-xs mb-2">Developed by Sorayuth Roth & Srongchhay Ly | Cambodia Academy of Digital Technology (CADT)</p>
+      <p class="text-gray-400 text-xs">Data stored locally in your browser. No personal information is sent to external servers.</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('hidden');
+    }
+
+    const scamPatterns = [
+      { pattern: /limited (stock|time|offer)/i, flag: 'Urgency tactic: Creates false scarcity' },
+      { pattern: /send (deposit|money|payment) (now|first|immediately)/i, flag: 'Payment pressure: Demands upfront payment' },
+      { pattern: /trust me|guaranteed|100% (authentic|original|real)/i, flag: 'False assurance: Unverifiable claims' },
+      { pattern: /cheap price|very cheap|lowest price/i, flag: 'Too good to be true: Suspiciously low price' },
+      { pattern: /bank transfer|wire transfer/i, flag: 'Risky payment: Non-reversible payment method' },
+      { pattern: /last (one|item|chance)|only (one|few) left/i, flag: 'Scarcity pressure: Rush decision making' },
+      { pattern: /act (now|fast|quickly)|hurry|urgent/i, flag: 'Time pressure: Creates urgency' },
+      { pattern: /don't tell|keep (this|it) secret/i, flag: 'Secrecy request: Isolation tactic' },
+      { pattern: /special (deal|price|offer) (for you|only)/i, flag: 'Exclusive offer: Psychological manipulation' },
+      { pattern: /pay (via|through|using) gift card/i, flag: 'Gift card payment: Common scam method' }
+    ];
+
+    function analyzeMessage() {
+      const message = document.getElementById('messageInput').value.trim();
+      const resultsDiv = document.getElementById('results');
+
+      if (!message) {
+        alert('Please enter a message to analyze');
+        return;
+      }
+
+      const foundFlags = [];
+      scamPatterns.forEach(({ pattern, flag }) => {
+        if (pattern.test(message)) {
+          foundFlags.push(flag);
+        }
+      });
+
+      resultsDiv.classList.remove('hidden');
+
+      if (foundFlags.length === 0) {
+        resultsDiv.innerHTML = `
+          <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-check text-green-600"></i>
+              </div>
+              <h3 class="font-semibold text-green-800">Low Risk Detected</h3>
+            </div>
+            <p class="text-green-600 text-sm">No obvious scam patterns detected in this message. However, always exercise caution and verify the seller before making any payment.</p>
+          </div>
+        `;
+      } else {
+        const riskLevel = foundFlags.length >= 3 ? 'High' : foundFlags.length >= 2 ? 'Medium' : 'Low';
+        const riskColor = riskLevel === 'High' ? 'red' : riskLevel === 'Medium' ? 'yellow' : 'orange';
+        
+        resultsDiv.innerHTML = `
+          <div class="bg-${riskColor}-50 border border-${riskColor}-200 rounded-lg p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 bg-${riskColor}-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-exclamation-triangle text-${riskColor}-600"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-${riskColor}-800">${riskLevel} Risk Detected</h3>
+                <p class="text-${riskColor}-600 text-sm">${foundFlags.length} suspicious pattern(s) found</p>
+              </div>
+            </div>
+            <div class="space-y-2">
+              ${foundFlags.map(flag => `
+                <div class="flex items-start gap-2 text-sm">
+                  <i class="fas fa-flag text-${riskColor}-500 mt-0.5"></i>
+                  <span class="text-gray-700">${flag}</span>
+                </div>
+              `).join('')}
+            </div>
+            <div class="mt-4 pt-4 border-t border-${riskColor}-200">
+              <p class="text-${riskColor}-700 text-sm font-medium">
+                <i class="fas fa-shield-alt mr-2"></i>
+                Recommendation: Be very cautious. Consider checking the seller's credibility before proceeding.
+              </p>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function setExample(num) {
+      const examples = {
+        1: "Hi! This iPhone is cheap price only $200! Limited stock, last one! Send deposit $100 now to reserve. Trust me, guaranteed authentic!",
+        2: "Special discount today only! Pay first via bank transfer. This is the lowest price you'll find. Act now before someone else takes it!",
+        3: "Hello, the laptop is available. You can check it first before buying. We can meet at a public place. Payment after you verify the item."
+      };
+      document.getElementById('messageInput').value = examples[num];
+    }
+  </script>
+</body>
+</html>

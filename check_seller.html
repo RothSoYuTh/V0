@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check Seller - ScamShield</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',
+            secondary: '#0ea5e9',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+          <i class="fas fa-shield-halved text-white text-lg"></i>
+        </div>
+        <div>
+          <span class="font-bold text-gray-800">ScamShield</span>
+          <p class="text-xs text-gray-500">Protect your purchase</p>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="index.html" class="text-gray-600 hover:text-blue-600">Home</a>
+        <a href="report-scam.html" class="text-gray-600 hover:text-blue-600">Report Scam</a>
+        <a href="reports.html" class="text-gray-600 hover:text-blue-600">Reports</a>
+        <a href="check-seller.html" class="text-blue-600 font-medium">Check Seller</a>
+        <a href="analyze-chat.html" class="text-gray-600 hover:text-blue-600">Analyze Chat</a>
+        <a href="learn.html" class="text-gray-600 hover:text-blue-600">Learn</a>
+      </nav>
+      <button class="md:hidden text-gray-600" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t px-4 py-3">
+      <nav class="flex flex-col gap-3 text-sm">
+        <a href="index.html" class="text-gray-600">Home</a>
+        <a href="report-scam.html" class="text-gray-600">Report Scam</a>
+        <a href="reports.html" class="text-gray-600">Reports</a>
+        <a href="check-seller.html" class="text-blue-600 font-medium">Check Seller</a>
+        <a href="analyze-chat.html" class="text-gray-600">Analyze Chat</a>
+        <a href="learn.html" class="text-gray-600">Learn</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-2xl mx-auto px-4 py-8">
+    <!-- Page Header -->
+    <div class="mb-8">
+      <div class="flex items-center gap-2 mb-2">
+        <i class="fas fa-search text-blue-600"></i>
+        <h1 class="text-2xl font-bold text-gray-800">Check Seller Credibility</h1>
+      </div>
+      <p class="text-gray-500 text-sm">Search by phone number, name, or profile link</p>
+    </div>
+
+    <!-- Search Section -->
+    <div class="mb-6">
+      <p class="text-gray-700 text-sm mb-4">Search here to find the suspicious sellers</p>
+      <input type="text" id="searchInput" placeholder="Enter email, phone number, seller name, or profile URL..."
+        class="w-full px-4 py-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm mb-4">
+      
+      <button onclick="checkSeller()" class="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-4 rounded-lg font-medium hover:from-blue-600 hover:to-cyan-600 transition flex items-center justify-center gap-2">
+        <i class="fas fa-star"></i>
+        Check sellers
+      </button>
+    </div>
+
+    <!-- Results -->
+    <div id="results" class="mb-6 hidden">
+      <!-- Results will appear here -->
+    </div>
+
+    <!-- Tip Box -->
+    <div class="bg-cyan-50 border border-cyan-200 rounded-lg p-4">
+      <p class="text-cyan-700 text-sm">
+        <i class="fas fa-lightbulb mr-2"></i>
+        <strong>Tip:</strong> Always check a seller before sending money. Search using their phone number, Facebook profile link, or any contact information they provided.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t mt-auto">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-center">
+      <p class="text-gray-600 text-sm mb-2">© 2025 ScamShield - Online Selling Scam Report Platform</p>
+      <p class="text-gray-500 text-xs mb-2">Developed by Sorayuth Roth & Srongchhay Ly | Cambodia Academy of Digital Technology (CADT)</p>
+      <p class="text-gray-400 text-xs">Data stored locally in your browser. No personal information is sent to external servers.</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('hidden');
+    }
+
+    function checkSeller() {
+      const query = document.getElementById('searchInput').value.trim();
+      const resultsDiv = document.getElementById('results');
+
+      if (!query) {
+        alert('Please enter a search term');
+        return;
+      }
+
+      const reports = JSON.parse(localStorage.getItem('scamReports') || '[]');
+      const matches = reports.filter(report => 
+        report.sellerName.toLowerCase().includes(query.toLowerCase()) ||
+        report.phoneNumber.includes(query) ||
+        report.profileUrl.toLowerCase().includes(query.toLowerCase())
+      );
+
+      resultsDiv.classList.remove('hidden');
+
+      if (matches.length === 0) {
+        resultsDiv.innerHTML = `
+          <div class="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
+            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <i class="fas fa-check text-green-600 text-xl"></i>
+            </div>
+            <h3 class="font-semibold text-green-800 mb-2">No reports found</h3>
+            <p class="text-green-600 text-sm">This seller has no scam reports in our database. However, always exercise caution.</p>
+          </div>
+        `;
+      } else {
+        resultsDiv.innerHTML = `
+          <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-red-800">Warning: ${matches.length} report(s) found!</h3>
+                <p class="text-red-600 text-sm">This seller has been reported for scam activity.</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              ${matches.map(match => `
+                <div class="bg-white rounded-lg p-4">
+                  <div class="flex items-start justify-between mb-2">
+                    <div>
+                      <p class="font-medium text-gray-800">${match.sellerName}</p>
+                      <p class="text-gray-500 text-sm">${match.phoneNumber}</p>
+                    </div>
+                    <span class="text-xs text-gray-400">${new Date(match.date).toLocaleDateString()}</span>
+                  </div>
+                  <p class="text-gray-600 text-sm">${match.description}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Allow Enter key to trigger search
+    document.getElementById('searchInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') checkSeller();
+    });
+  </script>
+</body>
+</html>
