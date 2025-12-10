@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScamShield - My Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="main.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center">
+          <img src="logo1.png" alt="">
+        </div>
+        <div>
+          <span class="font-bold text-gray-800">ScamShield</span>
+          <p class="text-xs text-gray-500">Protect your purchase</p>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="home.html" class="text-gray-600 hover:text-blue-600 font-medium">Home</a>
+        <a href="report-scam.html" class="text-gray-600 hover:text-blue-600 font-medium">Report Scam</a>
+        <a href="reports.html" class="text-gray-600 hover:text-blue-600 font-medium">Reports</a>
+        <a href="check-seller.html" class="text-gray-600 hover:text-blue-600 font-medium">Check Seller</a>
+        <a href="analyze-chat.html" class="text-gray-600 hover:text-blue-600 font-medium">Analyze Chat</a>
+        <a href="learn.html" class="text-gray-600 hover:text-blue-600 font-medium">Learn</a>
+        <a href="profile.html"><i class="fa-regular fa-user"></i></a>
+      </nav>
+      <button class="md:hidden text-gray-600" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t px-4 py-3">
+      <nav class="flex flex-col gap-3 text-sm">
+        <a href="home.html" class="text-gray-600">Home</a>
+        <a href="report-scam.html" class="text-gray-600">Report Scam</a>
+        <a href="reports.html" class="text-gray-600">Reports</a>
+        <a href="check-seller.html" class="text-gray-600">Check Seller</a>
+        <a href="analyze-chat.html" class="text-gray-600">Analyze Chat</a>
+        <a href="learn.html" class="text-gray-600">Learn</a>
+        <a href="profile.html" class="text-blue-600 font-medium">Profile</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <!-- Profile Header Card -->
+    <div class="bg-white rounded-2xl shadow-sm overflow-hidden mb-6">
+      <div class="h-24 bg-gradient-to-r from-blue-200 to-cyan-200"></div>
+      <div class="px-6 pb-6">
+        <div class="flex flex-col sm:flex-row sm:items-end gap-4 -mt-12">
+          <div class="w-24 h-24 bg-white rounded-full shadow-sm flex items-center justify-center">
+            <div class="w-20 h-20 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-full flex items-center justify-center">
+              <i class="fas fa-user text-blue-200 text-3xl"></i>
+            </div>
+          </div>
+          <div class="flex-1 sm:pb-1">
+            <h1 class="text-xl font-bold text-gray-800 mt-1" id="profileName">Scam selling killer</h1>
+            <p class="text-gray-500 text-sm">ScamShield Community Member</p>
+          </div>
+          <button onclick="openEditModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+            <i class="fas fa-edit mr-2"></i>Edit Profile
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <div class="bg-white rounded-xl p-4 shadow-sm text-center">
+        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+          <i class="fas fa-flag text-red-300"></i>
+        </div>
+        <p class="text-md font-bold text-gray-800" id="myReportsCount">100+</p>
+        <p class="text-gray-500 text-xs">Reports Submitted</p>
+      </div>
+      <div class="bg-white rounded-xl p-4 shadow-sm text-center">
+        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+          <i class="fas fa-search text-blue-500"></i>
+        </div>
+        <p class="text-md font-bold text-gray-800" id="myChecksCount">1k+</p>
+        <p class="text-gray-500 text-xs">Seller Checks</p>
+      </div>
+      <div class="bg-white rounded-xl p-4 shadow-sm text-center">
+        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+          <i class="fas fa-comment-dots text-purple-500"></i>
+        </div>
+        <p class="text-md font-bold text-gray-800" id="myAnalyzesCount">1k+</p>
+        <p class="text-gray-500 text-xs">Chats Analyzed</p>
+      </div>
+      <div class="bg-white rounded-xl p-4 shadow-sm text-center">
+        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+          <i class="fas fa-shield-alt text-green-500"></i>
+        </div>
+        <p class="text-md font-bold text-gray-800" id="protectionScore">100%</p>
+        <p class="text-gray-500 text-xs">Protection Score</p>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Left Column - Profile Info -->
+      <div class="md:col-span-3 space-y-6">
+        <!-- My Reports Section -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="font-semibold text-gray-800">
+              <i class="fas fa-file-alt text-blue-500 mr-2"></i>My Reports
+            </h2>
+            <a href="report-scam.html" class="text-blue-600 text-sm hover:underline">+ Add New</a>
+          </div>
+          <div id="myReportsList">
+            <!-- Reports will be loaded here -->
+          </div>
+          <div id="noReportsMessage" class="hidden text-center py-8">
+            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <i class="fas fa-file-alt text-gray-400 text-2xl"></i>
+            </div>
+            <p class="text-gray-500 text-sm">You haven't submitted any reports yet.</p>
+            <a href="report-scam.html" class="text-blue-600 text-sm hover:underline mt-2 inline-block">Submit your first report</a>
+          </div>
+        </div>
+
+        
+
+      <!-- Right Column - Quick Actions & Badges -->
+      <div class="space-y-6 max-w-4xl">
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h2 class="font-semibold text-gray-800 mb-4">
+            <i class="fas fa-bolt text-yellow-500 mr-2"></i>Quick Actions
+          </h2>
+          <div class="space-y-3">
+            <a href="report-scam.html" class="flex items-center gap-3 p-3 bg-red-50 rounded-lg hover:bg-red-100 transition">
+              <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+                <i class="fas fa-flag text-red-500 text-sm"></i>
+              </div>
+              <span class="text-gray-700 text-sm font-medium">Report a Scam</span>
+            </a>
+            <a href="check-seller.html" class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+              <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                <i class="fas fa-search text-blue-500 text-sm"></i>
+              </div>
+              <span class="text-gray-700 text-sm font-medium">Check a Seller</span>
+            </a>
+            <a href="analyze-chat.html" class="flex items-center gap-3 p-3 bg-purple-50 rounded-lg hover:bg-purple-100 transition">
+              <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                <i class="fas fa-comment-dots text-purple-500 text-sm"></i>
+              </div>
+              <span class="text-gray-700 text-sm font-medium">Analyze Messages</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Badges Section -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h2 class="font-semibold text-gray-800 mb-4">
+            <i class="fas fa-medal text-orange-500 mr-2"></i>Achievements
+          </h2>
+          <div class="grid grid-cols-3 gap-3" id="badgesContainer">
+            <div class="text-center" id="badge-reporter">
+              <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-1 opacity-40">
+                <i class="fas fa-flag text-gray-400"></i>
+              </div>
+              <p class="text-xs text-gray-400">Reporter</p>
+            </div>
+            <div class="text-center" id="badge-vigilant">
+              <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-1 opacity-40">
+                <i class="fas fa-eye text-gray-400"></i>
+              </div>
+              <p class="text-xs text-gray-400">Vigilant</p>
+            </div>
+            <div class="text-center" id="badge-protector">
+              <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-1 opacity-40">
+                <i class="fas fa-shield-alt text-gray-400"></i>
+              </div>
+              <p class="text-xs text-gray-400">Protector</p>
+            </div>
+            <div class="text-center" id="badge-analyst">
+              <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-1 opacity-40">
+                <i class="fas fa-chart-line text-gray-400"></i>
+              </div>
+              <p class="text-xs text-gray-400">Analyst</p>
+            </div>
+            <div class="text-center" id="badge-expert">
+              <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-1 opacity-40">
+                <i class="fas fa-star text-gray-400"></i>
+              </div>
+              <p class="text-xs text-gray-400">Expert</p>
+            </div>
+            <div class="text-center" id="badge-guardian">
+              <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-1 opacity-40">
+                <i class="fas fa-crown text-gray-400"></i>
+              </div>
+              <p class="text-xs text-gray-400">Guardian</p>
+            </div>
+          </div>
+          <p class="text-xs text-gray-400 mt-4 text-center">Complete actions to unlock badges</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Edit Profile Modal -->
+  <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-lg font-semibold text-gray-800">Edit Profile</h3>
+        <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+      <form id="editProfileForm" onsubmit="saveProfile(event)">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Display Name</label>
+          <input type="text" id="editName" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your name">
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Email (optional)</label>
+          <input type="email" id="editEmail" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your email">
+        </div>
+        <div class="flex gap-3">
+          <button type="button" onclick="closeEditModal()" class="flex-1 bg-gray-100 text-gray-700 px-4 py-2.5 rounded-lg font-medium text-sm hover:bg-gray-200 transition">Cancel</button>
+          <button type="submit" class="flex-1 bg-blue-600 text-white px-4 py-2.5 rounded-lg font-medium text-sm hover:bg-blue-700 transition">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 border-t mt-8">
+    <div class="max-w-6xl mx-auto px-4 py-8 text-center">
+      <p class="text-gray-600 text-sm mb-2">© 2025 ScamShield - Online Selling Scam Report Platform</p>
+      <p class="text-gray-500 text-xs mb-2">Developed by Sorayuth Roth & Srongchhay Ly | Cambodia Academy of Digital Technology (CADT)</p>
+      <p class="text-gray-400 text-xs">Data stored locally in your browser. No personal information is sent to external servers.</p>
+    </div>
+  </footer>
+</body>
+</html>
