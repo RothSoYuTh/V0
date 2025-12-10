@@ -1,3 +1,11 @@
+<!-- 
+
+localStorage.removeItem('userProfile');
+console.log('Profile removed. Remaining:', localStorage);
+location.reload();
+
+
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +36,7 @@
         <a href="check-seller.html" class="text-gray-600 hover:text-blue-600 font-medium">Check Seller</a>
         <a href="analyze-chat.html" class="text-gray-600 hover:text-blue-600 font-medium">Analyze Chat</a>
         <a href="learn.html" class="text-gray-600 hover:text-blue-600 font-medium">Learn</a>
-        <a href="profile.html"><i class="fa-regular fa-user"></i></a>
+        <a href="profile.html"><i class="fa-regular fa-user text-blue-600 font-medium border-b-2 border-blue-600 pb-1"></i></a>
       </nav>
       <button class="md:hidden text-gray-600" onclick="toggleMobileMenu()">
         <i class="fas fa-bars text-xl"></i>
@@ -43,7 +51,7 @@
         <a href="check-seller.html" class="text-gray-600">Check Seller</a>
         <a href="analyze-chat.html" class="text-gray-600">Analyze Chat</a>
         <a href="learn.html" class="text-gray-600">Learn</a>
-        <a href="profile.html" class="text-blue-600 font-medium">Profile</a>
+        <a href="profile.html" class="text-blue-600 font-medium border-l-4 border-blue-600 pl-3">Profile</a>
         
       </nav>
     </div>
@@ -233,12 +241,132 @@
   </div>
 
   <!-- Footer -->
-  <footer class="bg-gray-100 border-t mt-8">
-    <div class="max-w-6xl mx-auto px-4 py-8 text-center">
-      <p class="text-gray-600 text-sm mb-2">© 2025 ScamShield - Online Selling Scam Report Platform</p>
-      <p class="text-gray-500 text-xs mb-2">Developed by Sorayuth Roth & Srongchhay Ly | Cambodia Academy of Digital Technology (CADT)</p>
-      <p class="text-gray-400 text-xs">Data stored locally in your browser. No personal information is sent to external servers.</p>
+  <footer class="bg-gradient-to-b from-gray-900 to-black text-white border-t border-gray-800 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="text-center md:text-left">
+          <div class="flex items-center gap-3 justify-center md:justify-start mb-4">
+            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-full flex items-center justify-center shadow-md">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <span class="font-bold text-xl bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">ScamShield</span>
+          </div>
+          <p class="text-gray-400 text-sm max-w-md">Protecting the community from online scams through collective awareness and reporting.</p>
+        </div>
+        
+        <div class="text-center md:text-right">
+          <p class="text-gray-300 text-sm mb-2">© 2025 ScamShield - Online Selling Scam Report Platform</p>
+          <p class="text-gray-400 text-xs mb-1">Developed by Sorayuth Roth & Srongchhay Ly</p>
+          <p class="text-gray-500 text-xs mb-3">Cambodia Academy of Digital Technology (CADT)</p>
+          <p class="text-gray-500 text-xs">Data stored locally in your browser. Your privacy is protected.</p>
+        </div>
+      </div>
     </div>
   </footer>
 </body>
+<script>
+  function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('hidden');
+  }
+
+  // Edit Profile Modal Functions
+  function openEditModal() {
+    document.getElementById('editModal').classList.remove('hidden');
+    // Load current profile data
+    const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+    document.getElementById('editName').value = profile.name || '';
+    document.getElementById('editEmail').value = profile.email || '';
+  }
+
+  function closeEditModal() {
+    document.getElementById('editModal').classList.add('hidden');
+  }
+
+  function saveProfile(event) {
+    event.preventDefault();
+    const name = document.getElementById('editName').value;
+    const email = document.getElementById('editEmail').value;
+    
+    const profile = {
+      name: name,
+      email: email,
+      updatedAt: new Date().toISOString()
+    };
+    
+    localStorage.setItem('userProfile', JSON.stringify(profile));
+    
+    // Update display
+    document.getElementById('profileName').textContent = name || 'Scam selling killer';
+    
+    closeEditModal();
+    alert('Profile updated successfully!');
+  }
+
+  // Load profile data on page load
+  window.addEventListener('DOMContentLoaded', function() {
+    // Load user profile
+    const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+    if (profile.name) {
+      document.getElementById('profileName').textContent = profile.name;
+    }
+    
+    // Load user reports
+    const reports = JSON.parse(localStorage.getItem('scamReports') || '[]');
+    const myReportsList = document.getElementById('myReportsList');
+    const noReportsMessage = document.getElementById('noReportsMessage');
+    
+    if (reports.length > 0) {
+      noReportsMessage.classList.add('hidden');
+      
+      // Show only recent reports (limit to 5)
+      const recentReports = reports.slice(0, 5);
+      
+      myReportsList.innerHTML = recentReports.map(report => `
+        <div class="border-b border-gray-100 last:border-0 py-3">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="font-medium text-gray-800 text-sm">${report.sellerName || 'Unknown Seller'}</p>
+              <p class="text-gray-500 text-xs">${report.platform || 'Unknown'} • ${new Date(report.date).toLocaleDateString()}</p>
+            </div>
+            <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full">Reported</span>
+          </div>
+        </div>
+      `).join('');
+      
+      // Update stats
+      document.getElementById('myReportsCount').textContent = reports.length;
+    } else {
+      noReportsMessage.classList.remove('hidden');
+    }
+    
+    // Calculate badges (example logic)
+    if (reports.length >= 1) {
+      document.getElementById('badge-reporter').innerHTML = `
+        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-1">
+          <i class="fas fa-flag text-red-500"></i>
+        </div>
+        <p class="text-xs text-red-600 font-medium">Reporter</p>
+      `;
+    }
+    
+    if (reports.length >= 5) {
+      document.getElementById('badge-vigilant').innerHTML = `
+        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-1">
+          <i class="fas fa-eye text-blue-500"></i>
+        </div>
+        <p class="text-xs text-blue-600 font-medium">Vigilant</p>
+      `;
+    }
+    
+    if (reports.length >= 10) {
+      document.getElementById('badge-protector').innerHTML = `
+        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-1">
+          <i class="fas fa-shield-alt text-green-500"></i>
+        </div>
+        <p class="text-xs text-green-600 font-medium">Protector</p>
+      `;
+    }
+  });
+</script>
 </html>
